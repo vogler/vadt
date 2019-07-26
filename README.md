@@ -8,7 +8,7 @@ Want to store data with history.
   - Schema:
     - no schema, i.e. use some NoSQL document store like MongoDB -> same problem as above with using json files. What about relational data? Embed? What about cycles? References?
     - with schema, i.e. some relational DB -> have to create schema for tables, is there something that can infer this from the data? What if the schema changes?
-  - Versioning:
+  - Versioning foo:
     - Use a versioned database. How do they work? https://en.wikipedia.org/wiki/Temporal_database more in the way of time series database?
     - Generate tables for history -> hard to deal with [evolving schema](https://en.wikipedia.org/wiki/Schema_evolution), lot of programming overhead.
 
