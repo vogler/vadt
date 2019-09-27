@@ -26,3 +26,8 @@ Versioned databases:
 
 Ideas:
 - Put data in .ml files, run the compiler on it and commit to git only (or save back to database) if there are no errors.
+
+Tests:
+- OCaml `test.ml`: use objects since they have row-polymorphism
+- Haskell `test.hs`: TODO play around with type classes
+- Typescript `test.ts`: generate declarations with inferred types in `test.d.ts` with `tsc --sctrict -d test.ts`. Tried to get some types at runtime in `test_runtime.ts`, but probably doesn't work since it erases types when emitting JS.
