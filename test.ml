@@ -91,15 +91,15 @@ module Objects = struct
   type sport = < activity; kind: sport_kind; distance: distance; >
   type run = < sport; track: location list; >
   (* type defs above are nice, but value defs below ugly *)
-  let a = object method start = 1; method stop = 2; end
-  let s = object method start = 1; method stop = 2; method kind = Run; method distance = 0; end
-  let r = object method start = 1; method stop = 2; method kind = Run; method distance = 0; method track = [] end
+  let a = object method start = 1 method stop = 2 end
+  let s = object method start = 1 method stop = 2 method kind = Run method distance = 0; end
+  let r = object method start = 1 method stop = 2 method kind = Run method distance = 0 method track = [] end
   
   let duration a = a#stop - a#start (* yay! < start: int; stop: int; .. > -> int *)
   let _ = duration a, duration s, duration r
 
   (* there's no way to inherit/extend an object, only a class, but we can make a class based on some object type: *)
-  class c_sport (s: sport) = object method start = s#start; method stop = s#stop; method kind = s#kind; method distance = s#distance end
+  class c_sport (s: sport) = object method start = s#start method stop = s#stop method kind = s#kind method distance = s#distance end
   let add_track (*: sport -> run *) = fun s -> object
     inherit c_sport s (* only inherhits sport, even if s was more *)
     method track = []
@@ -108,9 +108,9 @@ module Objects = struct
   class c_activity (a: < start: time; stop: time; .. >) = object method start = a#start method stop = a#stop method duration = a#stop - a#start end
   let s' = new c_activity s (* adds duration but loses others *)
   (* could only use class as mixin; the following does not work, though ('The instance variable self cannot be accessed from the definition of another instance variable'): *)
-  (* let a' = object (self) method start = 1; method stop = 2; inherit c_activity self end *)
+  (* let a' = object (self) method start = 1 method stop = 2 inherit c_activity self end *)
   (* like this, it works (s' is < sport; duration: int >): *)
-  let s' = object inherit c_activity (object method start = 1; method stop = 2; end) method kind = Run; method distance = 0 end
+  let s' = object inherit c_activity (object method start = 1 method stop = 2; end) method kind = Run method distance = 0 end
   (* the result is no longer sport though! ('This expression has type < distance : int; duration : int; kind : sport_kind; start : time; stop : time > but an expression was expected of type sport The second object type has no method duration') *)
   (* let _: sport = s' *)
   type 'a sport_r = < activity; kind: sport_kind; distance: distance; .. > as 'a
