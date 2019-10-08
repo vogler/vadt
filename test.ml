@@ -144,3 +144,36 @@ module Objects = struct
 
   (* also see https://discuss.ocaml.org/t/extensible-records-in-ocaml/2153 *)
 end
+
+(* use lists of polymorphic variants which also have subtyping *)
+module PolyVariants = struct
+  (* both [`A 1; `B ""] and [`B ""; `A 1] have type [> `A of int | `B of string ] list *)
+  type activity = [ `Start of time | `Stop of time ]
+  type sport_kind = Run | Swim
+  type sport = [ activity | `Kind of sport_kind | `Distance of distance ]
+  type run = [ sport | `Track of location list ]
+  type 'a t = 'a list
+  let a = [`Start 1; `Stop 2]
+  let _: activity t = a (* a: [> `Start of int | `Stop of int ] list *)
+  let s = a @ [`Kind Run; `Distance 0]
+  let r = s @ [`Track []]
+  
+  let rec start = function `Start x :: xs -> x | x::xs -> start xs | [] -> assert false
+  (* val start : [> `Start of 'a ] list -> 'a *)
+  (* We could still call `start []` or `start [`Stop 2]` and it would fail at runtime. [] we could eliminate by using non-empty lists. *)
+
+  (* non-empty list *)
+  type 'a nel = Nil of 'a | Cons of 'a * 'a nel
+
+  let rec start = function Cons (`Start x, xs) -> x | Cons (x, xs) -> start xs | Nil x -> x
+  (* val start : ([> `Start of 'a ] as 'a) nel -> 'a *)
+  (* start (Nil (`Stop 2)) = `Stop 2 *)
+
+  let rec start = function Cons (`Start x, xs) -> x | Cons (x, xs) -> start xs | Nil (`Start x) -> x
+  (* Warning that second match case is unused. *)
+  (* val start : [< `Start of 'a ] nel -> 'a *)
+  (* but this allows only `Start and nothing else... *)
+
+  let rec start = function Cons (`Start x, xs) -> x | Cons (x, xs) -> start xs | Nil (`Start x) -> x | Nil x -> assert false
+  (* val start : [> `Start of 'a ] nel -> 'a *)
+end
