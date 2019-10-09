@@ -34,3 +34,11 @@ Tests:
 - OCaml `test.ml`: use objects since they have row-polymorphism
 - Haskell `test.hs`: TODO play around with type classes
 - Typescript `test.ts`: generate declarations with inferred types in `test.d.ts` with `tsc --sctrict -d test.ts`. Tried to get some types at runtime in `test_runtime.ts`, but probably doesn't work since it erases types when emitting JS.
+
+
+## Resources
+- OCaml
+  - serialization
+    - [ppx_deriving](https://github.com/ocaml-ppx/ppx_deriving) needs annotation on every type :(
+      - [ppx_autoserialize](https://github.com/jaredly/ppx_autoserialize) does not; works for OCaml?
+    - [milk](https://github.com/jaredly/milk) ([blog post](https://jaredforsyth.com/posts/announcing-milk/)) generates code for de/serialization in extra file, config with `types.json`, needs to be rerun when types change (no ppx), but supports ppx annotations for migrating types.
