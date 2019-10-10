@@ -56,3 +56,5 @@ It would be nice to be able to start writing data and get the inferred structura
     - [ppx_deriving](https://github.com/ocaml-ppx/ppx_deriving) needs annotation on every type :(
       - [ppx_autoserialize](https://github.com/jaredly/ppx_autoserialize) does not; works for OCaml?
     - [milk](https://github.com/jaredly/milk) ([blog post](https://jaredforsyth.com/posts/announcing-milk/)) generates code for de/serialization in extra file, config with `types.json`, needs to be rerun when types change (no ppx), but supports ppx annotations for migrating types.
+  - meta programming
+    - [BER MetaOCaml](http://okmij.org/ftp/ML/MetaOCaml.html) (see 'Data constructor restriction'): types can't be staged ('data constructors and record labels used within brackets must come from the types that are declared in separately compiled modules')
