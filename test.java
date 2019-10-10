@@ -21,6 +21,7 @@ class Test {
     // above does not work because Activity is not a supertype of ActvityI without `implements ActivityI` (nominal instead of structural typing)
     // instead we could define the static method in Activity and call it on a or pass it a new object of ActivityI:
     var ai = new ActivityI() {
+      // interface methods are implicitly public, class methods are not; so we need to add public to be able to create an anonymous class from the interface
       public int start(){ return 1; }
       public int stop(){ return 3; }
     };
@@ -66,9 +67,9 @@ abstract class Run extends Sport {
 
 // approach 2
 interface ActivityI {
-  // to be able to implement methods in an anonymous instance of the interface, they need to be public
-  public int start();
-  public int stop();
+  // interface methods are implicitly public!
+  int start();
+  int stop();
   static int duration(ActivityI x) {
     return x.stop() - x.start();
   }
