@@ -41,9 +41,9 @@ Tests:
 - OCaml `test.ml` [1, 2]: use objects since they have row-polymorphism
   - 1 ok, but a bit verbose compared to abstract class in Java
   - 2 ok
-  - 3 can't extend object, only class
+  - 3 can't extend object, only class (closed type)
 - Haskell `test.hs`: TODO play around with type classes
-- Typescript `test.ts` [1, 2, 3?]:
+- Typescript `test.ts` [1, 2, 3]: 1 via abstract class, 2 via function on interface, 3 via generic function with extends constraint and object spread (intersection type)
 
 It would be nice to be able to start writing data and get the inferred structural types as a starting point to make them into more abstract types.
 

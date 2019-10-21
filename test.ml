@@ -98,7 +98,7 @@ module Records = struct
   (* let c_activity (a: activity) = { a with duration = a.stop - a.start } (* does not work *) *)
   let c_activity (a: activity) = { start = a.start; stop = a.stop; duration = a.stop - a.start }
   (* same for c_sport and c_run... *)
-  
+
   (* test 2: we have no polymorphism, so the following will just work on run since it was defined last :( *)
   let duration a = a.stop - a.start
   (* let _ = duration a, duration s, duration r *)
@@ -117,7 +117,7 @@ module Objects = struct
   let a = object method start = 1 method stop = 2 end
   let s = object method start = 1 method stop = 2 method kind = Run method distance = 0; end
   let r = object method start = 1 method stop = 2 method kind = Run method distance = 0 method track = [] end
-  
+
   (* test 2 *)
   let duration a = a#stop - a#start (* yay! < start: int; stop: int; .. > -> int *)
   let _ = duration a, duration s, duration r
@@ -136,7 +136,7 @@ module Objects = struct
   (* let a' = object (self) method start = 1 method stop = 2 inherit c_activity self end (* error 'The instance variable self cannot be accessed from the definition of another instance variable' *) *)
   (* like this, it works (s' is < sport; duration: int >): *)
   let s' = object inherit c_activity (object method start = 1 method stop = 2; end) method kind = Run method distance = 0 end
-  (* the result is no longer sport though: *) 
+  (* the result is no longer sport though: *)
   (* let _: sport = s' (* error 'This expression has type < distance : int; duration : int; kind : sport_kind; start : time; stop : time > but an expression was expected of type sport The second object type has no method duration' *) *)
   type 'a sport_r = < activity; kind: sport_kind; distance: distance; .. > as 'a
   let _: 'a sport_r = s'
@@ -157,7 +157,7 @@ module PolyVariants = struct
   let _: activity t = a (* a: [> `Start of int | `Stop of int ] list *)
   let s = a @ [`Kind Run; `Distance 0]
   let r = s @ [`Track []]
-  
+
   let rec start = function `Start x :: xs -> x | x::xs -> start xs | [] -> assert false
   (* val start : [> `Start of 'a ] list -> 'a *)
   (* We could still call `start []` or `start [`Stop 2]` and it would fail at runtime. [] we could eliminate by using non-empty lists. *)
