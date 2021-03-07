@@ -24,6 +24,8 @@ For **history** we could use
   - [irmin](https://github.com/mirage/irmin) (OCaml)
     - many storage options
     - examples seem complex, don't show how to store anything but strings or trees?
+  - [DoIt](https://github.com/dolthub/dolt) (Go, based on noms) git for data: SQL database that you can fork, clone, branch, merge ([HN](https://news.ycombinator.com/item?id=26370572)) - not really what I have in mind, too much like git; meta data only per commit?
+  - [TerminusDB](https://github.com/terminusdb/terminusdb) (Prolog, graph database, document store) ([HN](https://news.ycombinator.com/item?id=22045801))
 - a normal database and automatically generate tables for history
   - Problem: [evolving schema](https://en.wikipedia.org/wiki/Schema_evolution). Specify functions for migration?
 
@@ -58,3 +60,6 @@ It would be nice to be able to start writing data and get the inferred structura
     - [milk](https://github.com/jaredly/milk) ([blog post](https://jaredforsyth.com/posts/announcing-milk/)) generates code for de/serialization in extra file, config with `types.json`, needs to be rerun when types change (no ppx), but supports ppx annotations for migrating types.
   - meta programming
     - [BER MetaOCaml](http://okmij.org/ftp/ML/MetaOCaml.html) (see 'Data constructor restriction'): types can't be staged ('data constructors and record labels used within brackets must come from the types that are declared in separately compiled modules')
+- via [Protobuffers Are Wrong](https://reasonablypolymorphic.com/blog/protos-are-wrong/index.html):
+  - https://github.com/mfp/extprot
+  - https://github.com/timbod7/adl
